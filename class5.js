@@ -1,4 +1,4 @@
-const topics=window.COURSE5_TOPICS;
+const courseTopics=window.COURSE5_TOPICS;
 const root=document.getElementById('course');
 let done=[];
 try { done=JSON.parse(localStorage.getItem('peterson5done')||'[]'); if(!Array.isArray(done)) done=[]; } catch { done=[]; }
@@ -6,8 +6,8 @@ let topic=null,stage='explain',index=0,score=0,chosen=null;
 const escapeHtml=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function render(){
   if(!topic){
-    root.innerHTML=`<section class="course-hero"><div><p class="eyebrow">Петерсон · 5 класс</p><h1>Карта математической экспедиции</h1><p>Выбирай тему в любом порядке. В каждой остановке тебя ждут правила, примеры, тренировка и проверка знаний.</p></div><div class="progress-chip">Пройдено: <strong>${done.length}/${topics.length}</strong></div></section><section class="topic-grid">${topics.map((t,i)=>`<button type="button" class="topic-card ${done.includes(t.id)?'completed':''}" style="--topic:${t.color}" data-topic="${t.id}"><span class="topic-number">${i+1}</span><span class="topic-icon">${t.icon}</span><h2>${escapeHtml(t.title)}</h2><p>${escapeHtml(t.subtitle)}</p><span class="topic-state">${done.includes(t.id)?'✅ Пройдена · открыть снова →':'Открыть тему →'}</span></button>`).join('')}</section>`;
-    root.querySelectorAll('[data-topic]').forEach(b=>b.onclick=()=>{topic=topics.find(t=>t.id===b.dataset.topic);stage='explain';index=score=0;chosen=null;render();scrollTo(0,0)});
+    root.innerHTML=`<section class="course-hero"><div><p class="eyebrow">Петерсон · 5 класс</p><h1>Карта математической экспедиции</h1><p>Выбирай тему в любом порядке. В каждой остановке тебя ждут правила, примеры, тренировка и проверка знаний.</p></div><div class="progress-chip">Пройдено: <strong>${done.length}/${courseTopics.length}</strong></div></section><section class="topic-grid">${courseTopics.map((t,i)=>`<button type="button" class="topic-card ${done.includes(t.id)?'completed':''}" style="--topic:${t.color}" data-topic="${t.id}"><span class="topic-number">${i+1}</span><span class="topic-icon">${t.icon}</span><h2>${escapeHtml(t.title)}</h2><p>${escapeHtml(t.subtitle)}</p><span class="topic-state">${done.includes(t.id)?'✅ Пройдена · открыть снова →':'Открыть тему →'}</span></button>`).join('')}</section>`;
+    root.querySelectorAll('[data-topic]').forEach(b=>b.onclick=()=>{topic=courseTopics.find(t=>t.id===b.dataset.topic);stage='explain';index=score=0;chosen=null;render();scrollTo(0,0)});
     return;
   }
   const tasks=topic[stage==='practice'?'practice':'test'];
